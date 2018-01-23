@@ -27,23 +27,7 @@ var seed = function(data){
     });
   })
 
-  if(data.id){ //If looking for a specific video id
-    Decentube.events.Upload({
-      fromBlock:config.block //Block number of the contract deployment
-    }, function(error, event){
-        console.log("hi")
-        if(event.returnValues[0] == data.id && client.get(event.returnValues.magnet) === null){
-          console.log(("Found video: "+event.returnValues.title + " (https://decentube.com/#/v/" + event.returnValues.id + ")").blue);
-          client.add(event.returnValues.magnet, {path:"./videos"}, function(torrent){
-            console.log(("STARTED downloading "+ event.returnValues.title + " (https://decentube.com/#/v/" + event.returnValues.id + ")").green)
-            torrent.on("done", function(){
-              console.log(("FINISHED downloading "+ event.returnValues.title + " (https://decentube.com/#/v/" + event.returnValues.id + ")").green)
-            })
-          })
-        }
-    })
-  }else if(data.user){ //If looking for a specific user's videos
-  console.log("hi")
+  if(data.user){ //If looking for a specific user's videos
     Decentube.methods.names(web3.utils.soliditySha3(data.user)).call(function(error, namesResult){
       if(namesResult != "0x0000000000000000000000000000000000000000"){
         console.log(("User " + data.user+ " was found! Seeding his videos.").green);
@@ -68,7 +52,7 @@ var seed = function(data){
     console.log("Seeding all videos".green);
     Decentube.events.Upload({
       fromBlock:config.block //Block number of the contract deployment
-    }, function(error, event){
+    }, function(error, event){ //TODO: Doesn't work
         if(client.get(event.returnValues.magnet) === null){
           console.log(("Found video: "+event.returnValues.title + " (https://decentube.com/#/v/" + event.returnValues.id + ")").blue);
           client.add(event.returnValues.magnet, {path:"./videos"}, function(torrent){
@@ -85,7 +69,6 @@ var seed = function(data){
 program
   .option('-a, --all', 'Seed all videos by every Decentube creator'.rainbow)
   .option('-u, --user [username]', 'Seed all videos by one Decentube creator')
-  .option('-v, --video [id]', 'Seed a single video')
 
 program.on('--help', function(){
   console.log('  Go to the Github repo for more information: https://github.com/Lamarkaz/decentube-node');
@@ -108,16 +91,5 @@ if (program.user) {
     console.log("The username length you have entered is not valid".red);
   }else{
     seed({user:program.user});
-  }
-}
-
-if (program.video) {
-  var id = parseInt(program.video);
-  if(program.video === true){
-    console.log("Please enter a video ID".blue);
-  }else if(typeof id != 'number' || id % 1 != 0 || id === 0){
-    console.log("The ID you have entered is not valid".red);
-  }else{
-    seed({id:id});
   }
 }
