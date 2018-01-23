@@ -10,21 +10,21 @@ Webtorrent content delivery server that serves as a fall back for p2p seeding
 ## Installation
 
 Clone this repo
-`git clone https://github.com/Lamarkaz/decentube-node.git`
+```git clone https://github.com/Lamarkaz/decentube-node.git```
 
 Change directory into the repo
-`cd decentube-node/`
+```cd decentube-node/```
 
 Install dependencies
-`npm install`
+```npm install```
 
 Install Forever
-`npm install -g forever`
-
+```npm install -g forever```
+``
 ## Usage
 
 Seed your own videos
-`forever start decentube.js -u YourUsername`
+```forever start decentube.js -u YourUsername```
 
 Seed all videos
-`forever start decentube.js -a`
+```forever start decentube.js -a```
