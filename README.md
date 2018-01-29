@@ -34,3 +34,9 @@ Seed your own videos
 Seed all videos
 
 `forever start decentube.js -a`
+
+## Troubleshooting
+
+If you get an electron error, install dependencies:
+
+`sudo apt-get install libgtkextra-dev libgconf2-dev libnss3 libasound2 libxtst-dev libxss1`
