@@ -19,7 +19,8 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.12.2",
-    "web3": "^1.0.0-beta2",
+    "web3": "^1.0.0-beta.29",
+    "web3-requestmanager": "^1.0.0-beta.14",
     "webtorrent-hybrid": "^1.0.6",
     "xvfb": "^0.2.3"
   }
